@@ -3,7 +3,6 @@ public:
     int nextGreaterElement(int n) {
         long x=n, d, i, ans=0;
         vector<int> num;
-        vector<int> temp;
         
         while(x)
         {
@@ -30,22 +29,7 @@ public:
                 
                 swap(num[i+1], num[x]);
                 
-                j=i;
-                while(j>=0)
-                {
-                    temp.push_back(num[j]);
-                    j--;
-                }
-                
-                sort(temp.begin(), temp.end());
-                
-                j=i;
-                int k=0;
-                while(j>=0)
-                {
-                    num[j]=temp[k];
-                    j--;k++;
-                }
+                sort(num.begin(), num.begin()+i+1, greater<int>());
                 
                 break;
             }
