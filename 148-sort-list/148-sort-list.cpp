@@ -38,36 +38,18 @@ public:
         if(!right)
             return left;
         
-        ListNode *new_head=0, *prev=0;
+        ListNode *new_head=0;
         
-        while(left && right)
+        if(left->val > right->val)
         {
-            if(left->val > right->val)
-            {
-                if(prev)
-                    prev->next=right;
-                
-                prev=right;
-                right=right->next;
-            }
-            else
-            {
-                if(prev)
-                    prev->next=left;
-                
-                prev=left;
-                left=left->next;
-            }
-            
-            if(!new_head)
-                new_head=prev;
+            new_head=right;
+            new_head->next=merge(left, right->next);
         }
-        
-        if(left)
-            prev->next=left;
-        
-        if(right)
-            prev->next=right;
+        else
+        {
+            new_head=left;
+            new_head->next=merge(right, left->next);
+        }
         
         return new_head;
     }
@@ -84,8 +66,8 @@ public:
         left=sortList(left);
         right=sortList(right);
         
-        ListNode *temp=merge(left, right);
+        head=merge(left, right);
         
-        return temp;
+        return head;
     }
 };
