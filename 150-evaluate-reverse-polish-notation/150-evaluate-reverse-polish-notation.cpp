@@ -9,34 +9,34 @@ public:
     }
     
     int evalRPN(vector<string>& tokens) {
-        stack<string> s;
+        stack<int> s;
         
         for(int i=0;i<tokens.size();i++)
         {
             
             if(operat(tokens[i]))
             {
-                int x=stoi(s.top());
+                int x=s.top();
                 s.pop();
-                int y=stoi(s.top());
+                int y=s.top();
                 s.pop();
                 
                 if(tokens[i]=="+")
-                    s.push(to_string(x+y));
+                    s.push(x+y);
                 else if(tokens[i]=="-")
-                    s.push(to_string(y-x));
+                    s.push(y-x);
                 else if(tokens[i]=="*")
-                    s.push(to_string(y*x));
+                    s.push(y*x);
                 else
-                    s.push(to_string(y/x));
+                    s.push(y/x);
                 
             }
             else
             {
-                s.push(tokens[i]);
+                s.push(stoi(tokens[i]));
             }
         }
         
-        return stoi(s.top());
+        return s.top();
     }
 };
