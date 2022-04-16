@@ -19,9 +19,10 @@ public:
        
         reorder(ptr->left);
         if(!newRoot)
+        {
             newRoot=ptr;
-        if(!temp)
             temp=ptr;
+        }  
         else
         {
             temp->right=ptr;
@@ -32,8 +33,8 @@ public:
     }
     
     TreeNode* increasingBST(TreeNode* root) {
-        
         reorder(root);
+        
         return newRoot;
     }
 };
