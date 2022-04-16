@@ -12,46 +12,22 @@
 class Solution {
 public:
     int num=0;
-    vector<int> bin;
     
-    bool isLeaf(TreeNode *temp)
-    {
-        if(temp->left==0 && temp->right==0)
-            return true;
+    int sumRootToLeaf(TreeNode* root, int dummy=0) {
         
-        return false;
-    }
-    
-    void getNum(vector<int> biNum)
-    {
-        int x=1;
-        for(int i=biNum.size()-1;i>=0;i--)
+        if(!root)
+            return num;
+        
+        dummy=dummy*2 + root->val;
+        
+        if(root->left==0 && root->right==0)
         {
-            if(biNum[i])
-            num+=x;
-            x=x<<1;
+            num+=dummy;
+            return num;
         }
-    }
-    
-    int sumRootToLeaf(TreeNode* root) {
         
-        bin.push_back(root->val);
-        
-        if(isLeaf(root))
-            getNum(bin);
-        else
-        {
-            if(root->left)
-            {
-                sumRootToLeaf(root->left);
-                bin.pop_back();
-            }
-            if(root->right)
-            {
-                sumRootToLeaf(root->right);
-                bin.pop_back();
-            }
-        }
+        sumRootToLeaf(root->left, dummy);
+        sumRootToLeaf(root->right, dummy);
         
         return num;
     }
