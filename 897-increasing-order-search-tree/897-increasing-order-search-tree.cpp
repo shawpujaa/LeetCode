@@ -11,25 +11,25 @@
  */
 class Solution {
 public:
-    TreeNode *newRoot=0, *temp=0;
-    void reorder(TreeNode *ptr)
+    TreeNode *newRoot=0, *prev=0;
+    void reorder(TreeNode *temp)
     {
-        if(!ptr)
+        if(!temp)
             return;
        
-        reorder(ptr->left);
+        reorder(temp->left);
         if(!newRoot)
         {
-            newRoot=ptr;
-            temp=ptr;
+            newRoot=temp;
+            prev=temp;
         }  
         else
         {
-            temp->right=ptr;
-            temp=ptr;
-            ptr->left=0;
+            prev->right=temp;
+            prev=prev->right;
+            temp->left=0;
         }
-        reorder(ptr->right);
+        reorder(temp->right);
     }
     
     TreeNode* increasingBST(TreeNode* root) {
