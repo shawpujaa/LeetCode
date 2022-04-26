@@ -11,18 +11,18 @@ public:
         
         for(int i=0;i<s.size();i++)
         {
-            while(!st.empty() && st.top()>=s[i] && hash[st.top()-97]>0 && !flag[s[i]-97])
+            hash[s[i]-97]-=1;
+            if(flag[s[i]-97])
+                continue;
+            
+            while(!st.empty() && st.top()>=s[i] && hash[st.top()-97]>0)
             {
                 flag[st.top()-97]=0;
                 st.pop();
             }
-            hash[s[i]-97]-=1;
-            if(!flag[s[i]-97])
-            {
-                st.push(s[i]);
-                
-                flag[s[i]-97]=1;
-            }
+            
+            st.push(s[i]);
+            flag[s[i]-97]=1;
         }
         
         while(!st.empty())
