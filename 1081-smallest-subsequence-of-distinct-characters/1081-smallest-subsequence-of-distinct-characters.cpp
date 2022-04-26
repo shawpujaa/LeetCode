@@ -1,7 +1,8 @@
 class Solution {
 public:
     string smallestSubsequence(string s) {
-        int hash[26]={0}, flag[26]={0};
+        int hash[26]={0};
+        bool flag[26]={0};
         stack<char> st;
         string ans="";
         
