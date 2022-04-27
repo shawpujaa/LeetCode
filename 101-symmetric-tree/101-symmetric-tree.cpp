@@ -13,14 +13,11 @@ class Solution {
 public:
    /* bool checkSymRecur(TreeNode *leftSide, TreeNode *rightSide)
     {
-        if(!leftSide && !rightSide)
-            return true;
-        
-        if((!leftSide && rightSide) || (leftSide && !rightSide))
-            return false;
-        
+        if(!leftSide || !rightSide)
+            return leftSide==rightSide;
+            
         if(leftSide->val!=rightSide->val)
-            return false;
+        return false;
         
         if(!checkSym(leftSide->left, rightSide->right))
             return false;
@@ -33,11 +30,8 @@ public:
     
     bool checkSymIter(TreeNode *leftSide, TreeNode *rightSide)
     {
-        if(!leftSide && !rightSide)
-            return true;
-        
-        if((!leftSide && rightSide) || (leftSide && !rightSide))
-            return false;
+        if(!leftSide || !rightSide)
+            return leftSide==rightSide;
         
         if(leftSide->val!=rightSide->val)
             return false;
