@@ -3,7 +3,7 @@ public:
     string decodeString(string s) {
         string ans="";
         int i=0;
-        stack<pair<string, string>> st;
+        stack<string> st;
         stack<int> freq;
         
         while(i<s.size())
@@ -18,23 +18,15 @@ public:
                         i++;
                         for(int j=0;j<freq.top();j++)
                         {
-                            if(st.top().second!=" ")
-                                dummy=dummy + st.top().first + st.top().second;
-                            else
-                                dummy=dummy + st.top().first;
+                            dummy=dummy + st.top();
                         }
                         st.pop();
                         freq.pop();
                         
                         if(st.size()>0)
                         {
-                            string str1=st.top().first, str2;
-                            if(st.top().second!=" ")
-                                str2=st.top().second+dummy;
-                            else
-                                str2=dummy;
-                            st.pop();
-                            st.push({str1, str2});
+                            st.top()=st.top()+dummy;
+                            
                             dummy.erase();
                         }
                         
@@ -57,7 +49,7 @@ public:
                         i++;
                     }
                 
-                    st.push({str," "});
+                    st.push(str);
                      
                 }
                 else
@@ -71,13 +63,7 @@ public:
                     
                     if(!st.empty())
                     {
-                        string str1=st.top().first, str2;
-                        if(st.top().second!=" ")
-                                str2=st.top().second+str;
-                            else
-                                str2=str;
-                        st.pop();
-                        st.push({str1, str2});
+                            st.top()=st.top()+str;
                     }   
                     else
                         dummy=dummy+str;
