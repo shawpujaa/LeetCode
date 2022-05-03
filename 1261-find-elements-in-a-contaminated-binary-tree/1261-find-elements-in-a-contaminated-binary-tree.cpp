@@ -20,15 +20,8 @@ public:
             Troot=root;
         
         root->val=x;
-        if(root->left)
-        {
-            FindElements(root->left, 2*x+1);
-        }
-        
-        if(root->right)
-        {
-            FindElements(root->right, 2*x+2);
-        }
+        FindElements(root->left, 2*x+1);
+        FindElements(root->right, 2*x+2);
         
     }
     
