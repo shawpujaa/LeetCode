@@ -1,62 +1,31 @@
 class Solution {
 public:
-    bool traverse(string s, int i, int j)
+    
+    bool check(string s, int i, int j)
     {
         while(i<j)
         {
             if(s[i]!=s[j])
-                return true;
-            
-            i++; j--;
+                return false;
+            i++, j--;
         }
         
-        return false;
+        return true;
     }
     
     bool validPalindrome(string s) {
-       int i=0, j=s.size()-1;
-        bool flag1=0, flag2=0, flag3=0;
-        
-        while(i<j)
+        for(int i=0, j=s.size()-1; i<j; i++, j--)
         {
             if(s[i]!=s[j])
             {
+                if(check(s, i+1, j))
+                    return true;
                 
-                if(s[i+1]==s[j] && s[j-1]!=s[i])
-                {
-                    i++; 
-                    if(traverse(s, i, j))
-                        return false;
-                    
+                if(check(s, i, j-1))
                     return true;
-                    
-                }    
-                else if(s[i]==s[j-1] && s[i+1]!=s[j])
-                {
-                    j--;
-                    if(traverse(s, i, j))
-                        return false;
-                    
-                    return true;
-                    
-                }
-                else
-                {
-                    if(traverse(s, i+1, j))
-                    {
-                        if(traverse(s, i, j-1))
-                        {
-                            return false;
-                        }
-                        
-                        return true;
-                    }
-                    
-                    return true;
-                }
-               
+                
+                return false;
             }
-            i++; j--;
         }
         
         return true;
