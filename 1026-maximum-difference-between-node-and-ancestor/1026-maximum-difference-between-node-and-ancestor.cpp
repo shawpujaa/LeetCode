@@ -33,7 +33,7 @@ public:
         maxAncestorDiff(root->right);
         
         return ans;
-    }*/
+    }
     
     int diff=-1;
     
@@ -42,7 +42,7 @@ public:
         if(!root)
             return {INT_MAX, INT_MIN};
         
-        pair<int, int> leftOne=getMaxDiff(root->left);
+        auto [leftMin, leftMax]=getMaxDiff(root->left);
         pair<int, int> rightOne=getMaxDiff(root->right);
         
         if(leftOne.first!=INT_MAX)
@@ -70,6 +70,29 @@ public:
     {
         
         getMaxDiff(root);
+        
+        return diff;
+    }*/
+    
+    int diff=-1;
+    
+    void getMaxDiff(TreeNode *root, int maxAncestor, int minAncestor)
+    {
+        if(!root)
+            return;
+        
+        diff=max({abs(maxAncestor-root->val), abs(minAncestor-root->val), diff});
+        
+        maxAncestor=max(maxAncestor, root->val);
+        minAncestor=min(minAncestor, root->val);
+        
+        getMaxDiff(root->left, maxAncestor, minAncestor);
+        getMaxDiff(root->right, maxAncestor, minAncestor);
+    }
+    
+    int maxAncestorDiff(TreeNode *root)
+    {
+        getMaxDiff(root, root->val, root->val);
         
         return diff;
     }
