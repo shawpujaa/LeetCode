@@ -38,7 +38,7 @@ public:
     }
     */
     
-    // Optmised || TC O(N) || DFS Post-Order (Top-Down Approach)
+    // Optmised || TC O(N) || DFS Post-Order (Bottom-Up Approach)
     int diff=-1;
     
     pair<int, int> getMaxDiff(TreeNode *root)
@@ -70,7 +70,7 @@ public:
     }
     
     
-    // Optmised || TC O(N) || DFS Pre-Order (Bottom-Up Approach)
+    // Optmised || TC O(N) || DFS Pre-Order (Top-Down Approach)
     /*int diff=-1;
     
     void getMaxDiff(TreeNode *root, int maxAncestor, int minAncestor)
