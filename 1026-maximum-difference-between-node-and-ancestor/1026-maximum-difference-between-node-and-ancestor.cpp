@@ -11,6 +11,8 @@
  */
 class Solution {
 public:
+       // Brute force TC O(N^2)
+    
     /*int ans=-1;
     void getMaxDiff(TreeNode *root, TreeNode *temp)
     {
@@ -34,7 +36,9 @@ public:
         
         return ans;
     }
+    */
     
+    // Optmised || TC O(N) || DFS Post-Order (Top-Down Approach)
     int diff=-1;
     
     pair<int, int> getMaxDiff(TreeNode *root)
@@ -43,27 +47,18 @@ public:
             return {INT_MAX, INT_MIN};
         
         auto [leftMin, leftMax]=getMaxDiff(root->left);
-        pair<int, int> rightOne=getMaxDiff(root->right);
+        auto [rightMin, rightMax]=getMaxDiff(root->right);
         
-        if(leftOne.first!=INT_MAX)
-        {
-            diff=max(diff, abs(leftOne.first-root->val));
-            diff=max(diff, abs(leftOne.second-root->val));
-        }
+        if(leftMin!=INT_MAX)
+            diff=max({diff, abs(leftMin-root->val), abs(leftMax-root->val)});
         
-        leftOne.first=min(leftOne.first, root->val);
-        leftOne.second=max(leftOne.second, root->val);
+        if(rightMin!=INT_MAX)
+            diff=max({diff, abs(rightMin-root->val), abs(rightMax-root->val)});
         
-        if(rightOne.first!=INT_MAX)
-        {
-            diff=max(diff, abs(rightOne.first-root->val));
-            diff=max(diff, abs(rightOne.second-root->val));
-        }
+        leftMin=min({leftMin, rightMin, root->val});
+        leftMax=max({leftMax, rightMax, root->val});
         
-        leftOne.first=min(leftOne.first, rightOne.first);
-        leftOne.second=max(leftOne.second, rightOne.second);
-        
-        return leftOne;
+        return {leftMin, leftMax};
     }
     
     int maxAncestorDiff(TreeNode *root)
@@ -72,9 +67,11 @@ public:
         getMaxDiff(root);
         
         return diff;
-    }*/
+    }
     
-    int diff=-1;
+    
+    // Optmised || TC O(N) || DFS Pre-Order (Bottom-Up Approach)
+    /*int diff=-1;
     
     void getMaxDiff(TreeNode *root, int maxAncestor, int minAncestor)
     {
@@ -95,5 +92,5 @@ public:
         getMaxDiff(root, root->val, root->val);
         
         return diff;
-    }
+    }*/
 };
