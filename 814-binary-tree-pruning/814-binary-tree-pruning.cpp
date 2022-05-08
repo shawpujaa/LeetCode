@@ -11,36 +11,17 @@
  */
 class Solution {
 public:
-    int prune(TreeNode *root, int cnt)
-    {
-        if(!root)
-            return 0;
-        
-        int leftCnt=prune(root->left, cnt);
-        int rightCnt=prune(root->right, cnt);
-        
-        if(!leftCnt)
-            root->left=0;
-        
-        if(!rightCnt)
-            root->right=0;
-    
-        if(root->val)
-            leftCnt++;
-        
-        if(leftCnt+rightCnt>0)
-            return 1;
-        
-        return 0;
-    }
-    
     TreeNode* pruneTree(TreeNode* root) {
+        if(!root)
+            return root;
         
-        int cnt=prune(root, 0);
+        root->left=pruneTree(root->left);
+        root->right=pruneTree(root->right);
         
-        if(cnt>0)
+        if(!root->left && !root->right && root->val==0)
+            return NULL;
+        
         return root;
-        
-        return 0;
     }
+    
 };
