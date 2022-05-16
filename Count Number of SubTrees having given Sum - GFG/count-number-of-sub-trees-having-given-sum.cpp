@@ -126,16 +126,16 @@ struct Node
 
 int calcSum(Node *temp, int X, int &cnt)
 {
-    if(!temp)
-    return 0;
-    
-    int leftSum=calcSum(temp->left, X, cnt);
-    int rightSum=calcSum(temp->right, X, cnt);
-    
-    if(leftSum+rightSum+temp->data==X)
-        cnt+=1;
-    
-    return leftSum+rightSum+temp->data;
+   if(!temp)
+   return 0;
+   
+   int x=calcSum(temp->left, X, cnt);
+   int y=calcSum(temp->right, X, cnt);
+   
+   if(x+y+temp->data==X)
+   cnt++;
+   
+   return x+y+temp->data;
 }
 
 int countSubtreesWithSumX(Node* root, int X)
