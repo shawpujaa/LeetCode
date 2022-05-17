@@ -38,34 +38,23 @@ class Solution
 {
     public:
     //Function to return the lowest common ancestor in a Binary Tree.
-    Node *ans=0;
-    
-    pair<int, int> getlca(Node *root, int n1, int n2)
-    {
-        if(!root)
-        return {0, 0};
-        
-        pair<int, int> leftt=getlca(root->left, n1, n2);
-        pair<int, int> rightt=getlca(root->right, n1, n2);
-        
-        if(rightt.first || root->data==n1)
-        leftt.first=1;
-        if(rightt.second || root->data==n2)
-        leftt.second=1;
-        
-        if(leftt.first && leftt.second && !ans)
-        ans=root;
-        
-        return leftt;
-    }
-    
+  
     Node* lca(Node* root ,int n1 ,int n2 )
     {
        //Your code here 
-
-       getlca(root, n1, n2);
+       if(root==0 || root->data==n1 || root->data==n2)
+       return root;
        
-       return ans;
+       Node *leftt=lca(root->left, n1, n2);
+       Node *rightt=lca(root->right, n1, n2);
+       
+       if(!leftt)
+       return rightt;
+       if(!rightt)
+       return leftt;
+       
+       return root;
+       
     }
 };
 
