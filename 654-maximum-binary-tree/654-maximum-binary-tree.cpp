@@ -11,31 +11,26 @@
  */
 class Solution {
 public:
-    TreeNode* construct(vector<int>& nums, int low, int high)
+    TreeNode* create(vector<int> nums, int low, int high)
     {
         if(low>=high)
-            return 0;
+            return nullptr;
         
-        int mx=-1, idx=-1;
-        
+        int idx=low;
         for(int i=low;i<high;i++)
         {
-            if(mx<nums[i])
-                mx=nums[i], idx=i;
+            if(nums[idx]<nums[i])
+                idx=i;
         }
+        TreeNode *temp=new TreeNode(nums[idx]);
         
-        TreeNode *temp=new TreeNode(mx);
-        
-        temp->left=construct(nums, low, idx);
-        temp->right=construct(nums, idx+1, high);
+        temp->left=create(nums, low, idx);
+        temp->right=create(nums, idx+1, high);
         
         return temp;
-
     }
-    
     TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
         
-        return construct(nums, 0, nums.size());
-        
-            }
+        return create(nums, 0, nums.size());
+    }
 };
