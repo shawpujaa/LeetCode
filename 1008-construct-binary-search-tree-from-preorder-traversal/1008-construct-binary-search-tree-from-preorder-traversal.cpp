@@ -12,24 +12,20 @@
 class Solution {
 public:
     int i=0;
-    TreeNode* getBST(vector<int> PreOrder, int bound)
-    {
-        if(i>=PreOrder.size())
+    TreeNode* bstFromPreorder(vector<int>& preorder, int bound=INT_MAX) {
+        if(i>=preorder.size())
             return 0;
         
-        if(PreOrder[i] < bound)
+        if(preorder[i] < bound)
         {
-            TreeNode *temp=new TreeNode(PreOrder[i]);
+            TreeNode *temp=new TreeNode(preorder[i]);
             i++;
-            temp->left=getBST(PreOrder, temp->val);
-            temp->right=getBST(PreOrder, bound);
+            temp->left=bstFromPreorder(preorder, temp->val);
+            temp->right=bstFromPreorder(preorder, bound);
             
             return temp;
         }
         
         return 0;
-    }
-    TreeNode* bstFromPreorder(vector<int>& preorder) {
-        return getBST(preorder, INT_MAX);
     }
 };
