@@ -109,24 +109,30 @@ int main() {
 
 // Function to delete a node from BST.
 
-Node* getPre(Node *root)
+Node* getPre(Node *root, Node* &prev)
 {
     if(!root)
     return 0;
     
     while(root->right)
-    root=root->right;
+    {
+        prev=root;
+        root=root->right;
+    }
     
     return root;
 }
 
-Node* getPost(Node *root)
+Node* getPost(Node *root, Node* &prev)
 {
     if(!root)
     return 0;
     
     while(root->left)
-    root=root->left;
+    {
+        prev=root;
+        root=root->left;
+    }
     
     return root;
 }
@@ -150,18 +156,34 @@ Node *deleteNode(Node *root, int X) {
     root->right=deleteNode(root->right, X);
     else
     {
-        Node *pre=getPre(root->left);
+        if(root->left && !root->right)
+        return root->left;
+        else if(!root->left && root->right)
+        return root->right;
+        else
+        {
+            Node *prev=root;
+            Node *pre=getPre(root->left, prev);
         
         if(pre)
         {
+            if(prev!=root)
+            prev->right=pre->left;
+            else
+            prev->left=pre->left;
+                
             root->data=pre->data;
-            root->left=deleteNode(root->left, pre->data);
         }
         else
         {
-            Node *post=getPost(root->right);
+            Node *post=getPost(root->right, prev);
+            if(prev!=root)
+                prev->left=pre->right;
+            else
+            prev->right=pre->right;
+            cout<<"k";
             root->data=post->data;
-            root->right=deleteNode(root->right, post->data);
+        }
         }
     }
     
