@@ -12,36 +12,15 @@
 class Solution {
 public:
     int sum=0;
-    
-    void childss(TreeNode *root)
-    {
-        TreeNode *leftt=root->left, *rightt=root->right;
-        if(leftt)
-        {
-            if(leftt->left)
-                sum+=leftt->left->val;
-            if(leftt->right)
-                sum+=leftt->right->val;
-        }
-        
-        if(rightt)
-        {
-            if(rightt->left)
-                sum+=rightt->left->val;
-            if(rightt->right)
-                sum+=rightt->right->val;
-        }
-    }
-    
-    int sumEvenGrandparent(TreeNode* root) {
+    int sumEvenGrandparent(TreeNode* root, TreeNode *parent=0, TreeNode *gparent=0) {
         if(!root)
-            return 0;
+        return sum;
         
-        if(root->val%2==0)
-            childss(root);
+        if(gparent && gparent->val%2==0)
+            sum+=root->val;
         
-        sumEvenGrandparent(root->left);
-        sumEvenGrandparent(root->right);
+        sumEvenGrandparent(root->left, root, parent);
+        sumEvenGrandparent(root->right, root, parent);
         
         return sum;
     }
