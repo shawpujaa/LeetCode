@@ -1,39 +1,46 @@
 class Solution {
 public:
-    bool check(int end, int start, vector<int> nums)
+    bool nextPerm(vector<vector<int>> &ans, vector<int> &nums)
     {
-        for(int i=start;i<end;i++)
-            if(nums[i]==nums[end])
-                return true;
+        int i,j, n=nums.size();
+        for(i=n-2;i>=0;i--)
+        {
+            if(nums[i+1]>nums[i])
+                break;
+        }
         
-        return false;
+        if(i==-1)
+        {
+            return false;
+        }
+        
+        for(j=n-1;j>i;j--)
+        {
+            if(nums[i]<nums[j])
+                break;
+        }
+        
+        swap(nums[i], nums[j]);
+        
+        //for swapping
+        i++;
+        for(j=n-1; j>i; j--,i++)
+        {
+            swap(nums[i], nums[j]);
+        }
+        
+        ans.push_back(nums);
+        
+        return true;
     }
     
-    void recur(int index, vector<int> &nums, vector<vector<int>> &ans)
-    {
-        if(index==nums.size())
-        {
-            ans.push_back(nums);
-            return;
-        }
-        
-        for(int i=index; i<nums.size(); i++)
-        {
-            if(check(i, index, nums))
-                continue;
-            
-            swap(nums[i], nums[index]);
-            recur(index+1, nums, ans);
-            swap(nums[i], nums[index]);
-            
-        }
-        
-    }
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-     vector<vector<int>> ans;
-        
-        recur(0, nums, ans);
-        
+        vector<vector<int>> ans;
+        sort(nums.begin(), nums.end());
+        ans.push_back(nums);
+
+        while(nextPerm(ans, nums));
+              
         return ans;
     }
 };
