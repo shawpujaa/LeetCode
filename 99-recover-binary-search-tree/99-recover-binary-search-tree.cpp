@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+   /*              //TC-O(nlogn)  SC-O(n)
     int it=0;
     void getInorder(TreeNode* root, vector<int> &Inorder)
     {
@@ -43,10 +44,73 @@ public:
         
         assign(root, Inorder);
         
+    }*/
+    
+    /*void getNodes(TreeNode *root, vector<TreeNode*> &Nodes)
+    {
+        if(!root)
+            return;
+        
+        getNodes(root->left, Nodes);
+        Nodes.push_back(root);
+        getNodes(root->right, Nodes);
+        
     }
-   /* void recoverTree(TreeNode* root) {
+    
+    void recoverTree(TreeNode* root) {
         vector<TreeNode*> Nodes;
         
         getNodes(root, Nodes);
+        
+        TreeNode *first=0, *second=0;
+        //cout<<Nodes[0]->val<<Nodes[1]->val<<Nodes[2]->val;
+        for(int i=1;i<Nodes.size();i++)
+        {
+            if(Nodes[i]<Nodes[i-1])
+            {
+                if(!first && !second)
+                {cout<<"a";
+                    first=Nodes[i-1];
+                    second=Nodes[i];
+                }
+                else
+                {
+                    second=Nodes[i];
+                    break;
+                }cout<<"G";
+            }cout<<Nodes[i-1]->val<<Nodes[i]->val;
+        }
+        
+        swap(first->val, second->val);
+        
     }*/
+     bool flag=0;
+     TreeNode *first=0, *second=0, *prev=0;
+    
+     void recover(TreeNode *root)
+     {
+         if(!root)
+             return;
+         
+         recover(root->left);
+         if(prev && root->val<prev->val)
+         {
+             if(!first)
+             {
+                 first=prev;
+                 second=root;
+             }
+             else
+                 second=root;
+         }
+         prev=root;
+         recover(root->right);
+     }
+    
+     void recoverTree(TreeNode* root) {
+        
+        recover(root);
+         if(first && second)
+         swap(first->val, second->val);
+    }
 };
