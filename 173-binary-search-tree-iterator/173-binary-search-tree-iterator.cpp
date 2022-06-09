@@ -12,39 +12,34 @@
 class BSTIterator {
 public:
     stack<TreeNode*> stk;
-    TreeNode *head=0;
+    TreeNode *headNode=0;
     int flag=0;
     
     BSTIterator(TreeNode* root) {
-        head=root;
+        headNode=root;
     }
     
-    void get()
+    void getNext()
     {
-        TreeNode *temp=stk.top();
-        while(temp->left)
-        {
-            stk.push(temp->left);
-            temp=temp->left;
-        }
-        
+        while(stk.top()->left)
+            stk.push(stk.top()->left);
     }
     
     int next() {
         if(stk.empty())
         {
             flag=1;
-            stk.push(head);
-            get();
+            stk.push(headNode);
+            getNext();
         }
-        else //while(!stk.empty())
+        else
         {
-            TreeNode *ptr=stk.top();
+            TreeNode *temp=stk.top();
             stk.pop();
-            if(ptr->right)
+            if(temp->right)
             {
-                stk.push(ptr->right);
-                get();
+                stk.push(temp->right);
+                getNext();
             }
         }
         
@@ -52,9 +47,10 @@ public:
     }
     
     bool hasNext() {
+        if(flag==0 || stk.size()>1 || (stk.size()==1 && stk.top()->right))
+            return true;
         
-        return ((stk.size()==1 && stk.top()->right) || stk.size()>1 || flag==0);
-        
+        return false;
     }
 };
 
