@@ -12,15 +12,14 @@ public:
         
         while(j<n)
         {
-            int k=j;
-            for(;k<=mx;k++)
+            mx=max(mx, hash[s[j]-97]);
+            if(mx==j)
             {
-                mx=max(mx, hash[s[k]-97]);
+                res.push_back(mx-i);
+                i=mx;
+                mx++;
             }
-            res.push_back(mx-i);
-            i=mx;
-            mx++;
-            j=k;
+            j++;
         }
         
         return res;
