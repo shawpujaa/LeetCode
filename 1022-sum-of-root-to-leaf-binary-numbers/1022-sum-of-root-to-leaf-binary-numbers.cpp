@@ -11,24 +11,43 @@
  */
 class Solution {
 public:
-    int num=0;
-    
-    int sumRootToLeaf(TreeNode* root, int dummy=0) {
+    int sum=0;
+    int getNum(vector<int> num)
+    {
+        int x=1, number=0;
         
-        if(!root)
-            return num;
-        
-        dummy=dummy*2 + root->val;
-        
-        if(root->left==0 && root->right==0)
+        for(int i=num.size()-1;i>=0;i--)
         {
-            num+=dummy;
-            return num;
+            if(num[i]==1)
+                number+=x;
+            
+            x=x*2;
         }
         
-        sumRootToLeaf(root->left, dummy);
-        sumRootToLeaf(root->right, dummy);
+        return number;
+    }
+    
+    void getSum(TreeNode *temp, vector<int> num)
+    {
+        if(!temp)
+            return;
         
-        return num;
+        num.push_back(temp->val);
+        if(!temp->left && !temp->right)
+        {
+            sum+=getNum(num);
+            return;
+        }
+        
+        getSum(temp->left, num);
+        getSum(temp->right, num);
+        
+    }
+    
+    int sumRootToLeaf(TreeNode* root) {
+        vector<int> num;
+        getSum(root, num);
+        
+        return sum;
     }
 };
