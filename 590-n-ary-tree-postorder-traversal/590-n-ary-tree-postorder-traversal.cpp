@@ -20,28 +20,26 @@ public:
 
 class Solution {
 public:
+    
     vector<int> postorder(Node* root) {
-        vector<int> ans;
+        vector<int> traversal;
         if(!root)
-            return ans;
+            return traversal;
         
         stack<Node*> stk;
         stk.push(root);
-        
         while(!stk.empty())
         {
             Node *temp=stk.top();
             stk.pop();
             
-            ans.push_back(temp->val);
+            traversal.push_back(temp->val);
             
             for(int i=0;i<temp->children.size();i++)
                 stk.push(temp->children[i]);
-            
         }
+        reverse(traversal.begin(), traversal.end());
         
-        reverse(ans.begin(), ans.end());
-        
-        return ans;
+        return traversal;
     }
 };
