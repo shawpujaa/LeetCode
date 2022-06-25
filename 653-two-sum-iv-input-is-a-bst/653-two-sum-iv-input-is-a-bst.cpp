@@ -11,31 +11,100 @@
  */
 class Solution {
 public:
-    vector<int> sortedArray;
-    void getInorder(TreeNode *root)
+    stack<TreeNode*> nxt, prv;
+    void getLeft(TreeNode *temp)
+    {
+        while(temp->left)
+        {
+            temp=temp->left;
+            nxt.push(temp);
+        }
+    }
+    
+    void getRight(TreeNode *temp)
+    {
+        while(temp->right)
+        {
+            temp=temp->right;
+            prv.push(temp);
+        }
+    }
+    
+    TreeNode* prev(TreeNode *root)
     {
         if(!root)
-            return;
+            return 0;
         
-        getInorder(root->left);
-        sortedArray.push_back(root->val);
-        getInorder(root->right);
-    }
-    bool findTarget(TreeNode* root, int k) {
-        getInorder(root);
-        
-        for(int i=0, j=sortedArray.size()-1;i<j;)
+        if(prv.empty())
         {
-            if((sortedArray[i]+sortedArray[j])==k)
-                return true;
+            prv.push(root);
+            getRight(root);
             
-            if((sortedArray[i]+sortedArray[j])>k)
-                j--;
-            
-            if((sortedArray[i]+sortedArray[j])<k)
-                i++;
+        }
+        else
+        {
+            TreeNode *temp=prv.top();
+            prv.pop();
+            if(temp->left)
+            {
+                prv.push(temp->left);
+                getRight(temp->left);
+            }
         }
         
-        return false;
+        return prv.top();
+                
+    }
+    
+    TreeNode* next(TreeNode *root)
+    {
+        if(!root)
+            return 0;
+        
+        if(nxt.empty())
+        {
+            nxt.push(root);
+            getLeft(root);
+            
+        }
+        else
+        {
+            TreeNode *temp=nxt.top();
+            nxt.pop();
+            if(temp->right)
+            {
+                nxt.push(temp->right);
+                getLeft(temp->right);
+            }
+        }
+        
+        return nxt.top();
+                
+    }
+    
+    bool findTarget(TreeNode* root, int k) {
+        if(!root)
+            return false;
+        
+        TreeNode *first=next(root);
+        TreeNode *second=prev(root);
+        
+        if(k>=2*second->val)
+            return false;
+        
+        while(first->val+second->val!=k)
+        {
+            while(first->val+second->val<k && first!=second)
+                first=next(root);
+            
+            while(first->val+second->val>k && first!=second)
+                second=prev(root);
+            
+            if(first==second)
+                return false;
+        }
+        
+        return true;
+        
     }
 };
