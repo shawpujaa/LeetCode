@@ -10,16 +10,16 @@
 
 class Solution {
 public:
+    // LCA method canbeb used but this way we are not using the BST property.......
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if((p->val <= root->val && q->val >= root->val) || (p->val >= root->val && q->val <= root->val))
-            return root;
+        if(!root)
+            return 0;
         
-        TreeNode *temp;
-        if(p->val <= root->val && q->val <= root->val)
-            temp=lowestCommonAncestor(root->left, p, q);
-        else
-            temp=lowestCommonAncestor(root->right, p, q);
+        if(root->val < p->val && root->val < q->val)
+            return lowestCommonAncestor(root->right, p, q);
+        if(root->val > p->val && root->val > q->val)
+            return lowestCommonAncestor(root->left, p, q);
         
-        return temp;
+        return root;
     }
 };
