@@ -30,19 +30,14 @@ class Solution
     int minDiff(Node *root, int K)
     {
         //Your code here
-        
         if(!root)
         return diff;
         
-        diff=min(diff, abs(root->data-K));
+        diff=min(diff, abs(K-root->data));
         
-        if(diff==0)
-        return diff;
-        
-        if(K<root->data)
+        if(root->data > K)
         minDiff(root->left, K);
-        
-        if(K>root->data)
+        if(root->data < K)
         minDiff(root->right, K);
         
         return diff;
