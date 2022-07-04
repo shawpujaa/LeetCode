@@ -11,7 +11,8 @@
  */
 class Solution {
 public:
-    int cnt=0;
+    // Method 1---
+   /* int cnt=0;
     int count(TreeNode *root, vector<int> hash)
     {
         if(!root)
@@ -41,5 +42,69 @@ public:
         vector<int> hash(10, 0);
         
         return count(root, hash);
+    }  */
+    
+    // Method 2---
+    
+   /* int cnt=0;
+    int count(TreeNode *root, unordered_set<int> st)
+    {
+        if(!root)
+            return cnt;
+        
+        if(st.find(root->val)==st.end())
+            st.insert(root->val);
+        else
+            st.erase(root->val);
+        
+        if(!root->left && !root->right)
+        {
+            if(st.size()<=1)
+                cnt++;
+            
+            return cnt;
+        }
+        
+        count(root->left, st);
+        count(root->right, st);
+        
+        return cnt;
+    }
+    
+    int pseudoPalindromicPaths (TreeNode* root) {
+        unordered_set<int> st;
+        
+        return count(root, st);
+    }  */
+    
+    // Method 3-----
+    
+    int cnt=0;
+    int count(TreeNode *root, int bitPath)
+    {
+        if(!root)
+            return cnt;
+        
+        bitPath^=1<<root->val;
+        
+        if(!root->left && !root->right)
+        {
+            if(ceil(log2(bitPath)) == floor(log2(bitPath)))
+                cnt++;
+            
+            return cnt;
+        }
+        
+        count(root->left, bitPath);
+        count(root->right, bitPath);
+        
+        return cnt;
+    }
+    
+    int pseudoPalindromicPaths(TreeNode *root)
+    {
+        int bitPath=0;
+        
+        return count(root, bitPath);
     }
 };
