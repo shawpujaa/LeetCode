@@ -25,10 +25,7 @@ class Solution{
             x--;
             
             if(mp.find(x)!=mp.end())
-            {
-                auto it=mp.find(x);
-                cnt+=(*it).second;
-            }
+                cnt+=mp[x];
             
             mp[x]+=1;
         }
