@@ -10,33 +10,35 @@
  * };
  */
 class Solution {
-public:
-    void view(TreeNode *temp, vector<int> &ans, int level, int &mxlevel)
-    {
-        if(!temp)
-            return;
-        
-        if(mxlevel<level)
-        {
-            mxlevel=level;
-            ans.push_back(temp->val);
-        }
-        
-        view(temp->right, ans, level+1, mxlevel);
-        view(temp->left, ans, level+1, mxlevel);
-    }
-    
+public:   // BFS method
     vector<int> rightSideView(TreeNode* root) {
-        
-        vector<int> ans;
-        int mxlevel=0;
+        vector<int> rightView;
         
         if(!root)
-            return ans;
+            return rightView;
         
-        view(root, ans, 1, mxlevel);
+        queue<TreeNode*> q;
+        q.push(root);
         
-        return ans;
+        while(!q.empty())
+        {
+            int size=q.size();
+            
+            for(int i=0;i<size;i++)
+            {
+                TreeNode *node=q.front();
+                q.pop();
+                
+                if(node->left)
+                    q.push(node->left);
+                if(node->right)
+                    q.push(node->right);
+                
+                if(i==size-1)
+                    rightView.push_back(node->val);
+            }
+        }
         
+        return rightView;
     }
 };
