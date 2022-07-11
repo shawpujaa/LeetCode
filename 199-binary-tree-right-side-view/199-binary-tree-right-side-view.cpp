@@ -11,7 +11,7 @@
  */
 class Solution {
 public:   // BFS method
-    vector<int> rightSideView(TreeNode* root) {
+   /* vector<int> rightSideView(TreeNode* root) {
         vector<int> rightView;
         
         if(!root)
@@ -38,6 +38,25 @@ public:   // BFS method
                     rightView.push_back(node->val);
             }
         }
+        
+        return rightView;
+    }  */
+    
+    // DFS method
+    vector<int> rightView;
+    int mxLevel=-1;
+    vector<int> rightSideView(TreeNode* root, int currLevel=0) {
+        if(!root)
+            return rightView;
+        
+        if(currLevel > mxLevel)
+        {
+            mxLevel=currLevel;
+            rightView.push_back(root->val);
+        }
+        
+        rightSideView(root->right, currLevel+1);
+        rightSideView(root->left, currLevel+1);
         
         return rightView;
     }
