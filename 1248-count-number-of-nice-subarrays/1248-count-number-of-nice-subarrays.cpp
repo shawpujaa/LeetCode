@@ -36,4 +36,6 @@ public:
         
         return res;
     }
+    
+    // change evn-0 & odd-1, then this problem reduces to subarray sum equal to k
 };
