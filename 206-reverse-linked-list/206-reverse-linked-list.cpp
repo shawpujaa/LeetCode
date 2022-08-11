@@ -10,7 +10,7 @@
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
+  /*  ListNode* reverseList(ListNode* head) {
         if(!head || !head->next)
             return head;
         
@@ -26,5 +26,22 @@ public:
         
         return prev;
             
+    }  */
+    
+    // Recursive soln
+    ListNode *newHead=0;
+    
+    ListNode* reverseList(ListNode *head, ListNode *prev=0)
+    {
+        if(!head)
+            return newHead;
+        
+        if(!head->next)
+            newHead=head;
+        
+        ListNode *nxtt=head->next;
+        head->next=prev;
+        
+        return reverseList(nxtt, head);
     }
 };
