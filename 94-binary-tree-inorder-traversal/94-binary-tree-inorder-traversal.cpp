@@ -11,9 +11,10 @@
  */
 class Solution {
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> traversal;
-        
+    
+    // STACK METHOD TC-O(N) SC-O(N)
+  /*  vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> res;
         stack<TreeNode*> stk;
         TreeNode *temp=root;
         
@@ -27,13 +28,52 @@ public:
             else
             {
                 temp=stk.top();
+                res.push_back(temp->val);
                 stk.pop();
-                
-                traversal.push_back(temp->val);
                 temp=temp->right;
             }
         }
         
-        return traversal;
+        return res;
+    }  */
+    
+    
+    // MORRIS TRAVERSAL TC-O(N) SC-O(1)
+    
+    vector<int> inorderTraversal(TreeNode *root)
+    {
+        vector<int> res;
+        TreeNode *curr=root;
+        
+        while(curr)
+        {
+            if(!curr->left)
+            {
+                res.push_back(curr->val);
+                curr=curr->right;
+            }
+            else
+            {
+                TreeNode *prev=curr->left;
+                
+                while(prev->right && prev->right != curr)
+                    prev=prev->right;
+                
+                if(!prev->right)
+                {
+                    prev->right=curr;
+                    curr=curr->left;
+                }
+                else
+                {
+                    prev->right=0;
+                    res.push_back(curr->val);
+                    curr=curr->right;
+                }
+            }
+        }
+        
+        return res;
+        
     }
 };
