@@ -11,74 +11,29 @@
  */
 class Solution {
 public:
-   /* vector<int> postorderTraversal(TreeNode* root) {
-        vector<int> traversal;
-        if(!root)
-            return traversal;
-        
-        stack<TreeNode*> stk;
-        stk.push(root);
-        
-        while(!stk.empty())
-        {
-            TreeNode *temp=stk.top();
-            stk.pop();
-            
-            traversal.push_back(temp->val);
-            
-            if(temp->left)
-                stk.push(temp->left);
-            if(temp->right)
-                stk.push(temp->right);
-        }
-        
-        reverse(traversal.begin(), traversal.end());
-        
-        return traversal;
-    } */
-    
-    
-    
-    // WITHOUT REVERSING!!!!!------------
-    
-    vector<int> postorderTraversal(TreeNode *root)
-    {
-        vector<int> traversal;
-        
-        stack<TreeNode*> stk;
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
         TreeNode *temp=root;
+        stack<TreeNode*> stk;
         
         while(temp || !stk.empty())
         {
             if(temp)
             {
+                res.push_back(temp->val);
                 stk.push(temp);
-                stk.push(temp);
-                
-                temp=temp->left;
+                temp=temp->right;
             }
             else
             {
                 temp=stk.top();
+                temp=temp->left;
                 stk.pop();
-                
-                if(stk.empty())
-                {
-                    traversal.push_back(temp->val);
-                    break;
-                }
-                
-                if(temp==stk.top())
-                temp=temp->right;
-                else
-                {
-                    traversal.push_back(temp->val);
-                    temp=nullptr;
-                }
             }
         }
         
-        return traversal;
+        reverse(res.begin(), res.end());
+        
+        return res;
     }
-    
 };
