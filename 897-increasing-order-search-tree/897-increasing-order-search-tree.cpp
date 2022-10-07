@@ -11,30 +11,20 @@
  */
 class Solution {
 public:
-    TreeNode *newRoot=0, *prev=0;
-    void reorder(TreeNode *temp)
-    {
-        if(!temp)
-            return;
-       
-        reorder(temp->left);
-        if(!newRoot)
-        {
-            newRoot=temp;
-            prev=temp;
-        }  
-        else
-        {
-            prev->right=temp;
-            prev=prev->right;
-            temp->left=0;
-        }
-        reorder(temp->right);
-    }
-    
+    TreeNode* prev=0, *head=0;
     TreeNode* increasingBST(TreeNode* root) {
-        reorder(root);
+        if(!root)
+            return 0;
         
-        return newRoot;
+        increasingBST(root->left);
+        root->left=0;
+        if(prev)
+            prev->right=root;
+        if(!head)
+            head=root;
+        prev=root;
+        increasingBST(root->right);
+        
+        return head;
     }
 };
