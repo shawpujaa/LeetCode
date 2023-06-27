@@ -13,26 +13,21 @@ class Solution{
     int findPlatform(int arr[], int dep[], int n)
     {
     	// Your code here
-    	vector<pair<int, int>> vect;
+    	sort(arr, arr+n);
+    	sort(dep, dep+n);
     	
-    	for(int i=0;i<n;i++)
-    	vect.push_back({arr[i], dep[i]});
-    	
-    	
-    	sort(vect.begin(), vect.end());
-    	
-    	priority_queue<int, vector<int>, greater<int>> pq;
-    	int cnt=0;
-    	
+    	int cnt=0, curr=0, j=0;
     	for(int i=0;i<n;i++)
     	{
-    	    while(!pq.empty() && pq.top() < vect[i].first)
-    	    pq.pop();
+    	    while(dep[j] < arr[i])
+    	    {
+    	        curr-=1;
+    	        j++;
+    	    }
     	    
-    	    pq.push(vect[i].second);
-    	    int x=pq.size();
-    	    cnt=max(cnt, x);
+    	    curr+=1;
     	    
+    	    cnt=max(cnt, curr);
     	}
     	
     	return cnt;
