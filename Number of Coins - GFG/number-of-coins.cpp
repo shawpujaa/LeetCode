@@ -28,7 +28,7 @@ class Solution{
 	    
 	}  */
 	
-	int cntCoins(int coins[], int M, int V, vector<int>& dummy)
+/*	int cntCoins(int coins[], int M, int V, vector<int>& dummy)
 	{
 	    if(V==0)
 	    return 0;
@@ -65,7 +65,33 @@ class Solution{
 	    return cnt;
 	    
 	    
-	}  
+	}   */
+	
+	
+	int minCoins(int coins[], int M, int V)
+	{
+	    vector<int> dummy(V+1, INT_MAX);
+	    dummy[0]=0;
+	    
+	    for(int i=1;i<=V;i++)
+	    {
+	        int mn=INT_MAX;
+	        for(int j=0;j<M;j++)
+	        {
+	            if(coins[j] <= i)
+	            mn=min(mn, dummy[i-coins[j]]);
+	        }
+	        
+	        if(mn!=INT_MAX)
+	        dummy[i]=mn+1;
+	    }
+	    
+	    if(dummy[V]==INT_MAX)
+	    return -1;
+	    
+	    return dummy[V];
+	    
+	}
 	  
 };
 
