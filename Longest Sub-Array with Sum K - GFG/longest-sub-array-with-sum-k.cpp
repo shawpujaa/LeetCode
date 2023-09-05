@@ -10,22 +10,18 @@ class Solution{
     { 
         // Complete the function
         map<int, int> mp;
-        
-        int sum=0, ans=0;
-        mp[0]=-1;
+        int ans=0, sum=0;
+        mp[0] = -1;
         
         for(int i=0;i<N;i++)
         {
             sum += A[i];
             
-            if(mp.find(sum-K) != mp.end())
-            ans = max(ans, i - (mp.find(sum-K))->second);
-            
+            if(mp.find(sum - K) != mp.end())
+            ans = max(ans, i - (mp.find(sum - K))->second);
             
             if(mp.find(sum) == mp.end())
             mp[sum] = i;
-            
-            
         }
         
         return ans;
